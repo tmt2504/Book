@@ -1,4 +1,5 @@
 ﻿using System;
+using BookWeb.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookWeb.Data
@@ -8,6 +9,8 @@ namespace BookWeb.Data
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
 		{
 		}
+
+		public DbSet<Category> Category { get; set; }
 
 	}
 }
