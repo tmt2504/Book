@@ -23,6 +23,23 @@ namespace BookWeb.Controllers
             List<Category> categoryList = _db.Category.ToList();
             return View(categoryList);
         }
-    }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+		public IActionResult Create(Category category)
+		{
+            if (ModelState.IsValid)
+            {
+				_db.Category.Add(category);
+				_db.SaveChanges();
+				return RedirectToAction("Index", "Category");
+			}
+            return View();
+            
+		}
+	}
 }
 
