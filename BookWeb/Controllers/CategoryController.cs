@@ -40,6 +40,32 @@ namespace BookWeb.Controllers
             return View();
             
 		}
-	}
+
+        public IActionResult Edit(int? id)
+        {
+            if(id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Category ?categoryId = _db.Category.Find(id);
+            if (categoryId == null)
+            {
+                return NotFound();
+            }
+            return View(categoryId);
+        }
+        [HttpPost]
+        public IActionResult Edit(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Category.Add(category);
+                _db.SaveChanges();
+                return RedirectToAction("Index", "Category");
+            }
+            return View();
+
+        }
+    }
 }
 
