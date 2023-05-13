@@ -17,6 +17,7 @@ namespace BookWeb.Controllers
         {
             _db = db;
         }
+
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -28,6 +29,7 @@ namespace BookWeb.Controllers
         {
             return View();
         }
+
         [HttpPost]
 		public IActionResult Create(Category category)
 		{
@@ -35,7 +37,8 @@ namespace BookWeb.Controllers
             {
 				_db.Category.Add(category);
 				_db.SaveChanges();
-				return RedirectToAction("Index", "Category");
+                TempData["success"] = "Category created sucessfully";
+                return RedirectToAction("Index", "Category");
 			}
             return View();
             
@@ -54,16 +57,47 @@ namespace BookWeb.Controllers
             }
             return View(categoryId);
         }
+
         [HttpPost]
         public IActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
             {
-                _db.Category.Add(category);
+                _db.Category.Update(category);
                 _db.SaveChanges();
+                TempData["success"] = "Category updated sucessfully";
                 return RedirectToAction("Index", "Category");
             }
             return View();
+
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Category? categoryId = _db.Category.Find(id);
+            if (categoryId == null)
+            {
+                return NotFound();
+            }
+            return View(categoryId);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int id)
+        {
+            Category? category = _db.Category.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            _db.Category.Remove(category);
+            _db.SaveChanges();
+                TempData["success"] = "Category deleted sucessfully";
+            return RedirectToAction("Index","Category");
 
         }
     }
