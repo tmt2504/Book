@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using BookWeb.Models;
+using Book.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookWeb.Controllers

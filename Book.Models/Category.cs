@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BookWeb.Models
+namespace Book.Models
 {
 	public class Category
 	{
